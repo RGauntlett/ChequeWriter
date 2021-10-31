@@ -54,7 +54,7 @@ namespace ChequeWriter
                     // send the integer string to be converted
                     else
                     {
-                        integers = converterAgain(splitString[0])+ "dollars";
+                        integers = converterAgain(splitString[0])+ " dollars";
                         Console.WriteLine(integers);
                         Console.WriteLine(cents);
                         return integers + " and " + cents;
@@ -181,15 +181,19 @@ namespace ChequeWriter
                          
                     }  
                     // get the millions, thousands to print
-                    // check if holdingString has cleared and if i is 
+                    // check if the counter is 2 holdingString has cleared and if i still does not equal 0
                     if(counter == 2 && holdingString.Length == 0 && i!=0)
                     {
-                        response = response.Insert(0, "million and ");
+                        // append million
+                        response = response.Insert(0, "million, ");
                         
                     }
+                    // check if the counter is 2 holdingString has cleared and if i still does not equal 0
+
                     if (counter == 1 && holdingString.Length == 0 && i!= 0)
                     {
-                        response = response.Insert(0,  "thousand and ");
+                        // append thousand
+                        response = response.Insert(0,  "thousand, ");
                     }
                     
                    
@@ -380,7 +384,7 @@ namespace ChequeWriter
                 return "nine";
             } else 
             {
-                return " ";
+                return String.Empty;
             }
         }
         static string convertionForTens(string n)
