@@ -15,33 +15,65 @@ namespace ChequeWriter
         static string Convert(string num)
         {
           
-
-
+                // check if the first character is a "."
+                if(num[0].ToString() == ".")
+                // add a 0
+                {
+                    num = num.Insert(0,"0");
+                }
                 // check if there are decimal points
                 int index = num.IndexOf(".");
                 // if there is a decimal then split the string at that point
                 if(index>-1)
                 {
-
+                    // split the array at the "."
                     var splitString = num.Split(".");
                     // create empty strings to hold cents and dollars
                     string cents = String.Empty;
                     string integers = String.Empty;
-                    {
-                        
-                    }
+                    
 
                     
-                    //check if there is 1 cent
-                    if (Int32.Parse(splitString[1]) == 1)
+                    //check if  we are usine the hundredth space
+                    if (splitString[1].Length == 2)
                     {
-                        cents =  "one cent";
+                        // check if the 10th spot is 0
+                        if (splitString[1][0].ToString() == "0")
+                        {
+                            //check if the hundredth spot is 1
+                            if(splitString[1][1].ToString() == "1")
+                            {
+                                cents =  "one cent";
+                            } 
+                            // check if there is 0 cents
+                            else if(splitString[1][1].ToString() == "0")
+                            {
+                                cents = "zero cents";
+                            }
+                        }
+                        // otherwise add one 0 to the beginning and convert it
+                        else
+                        {
+                            cents = masterConverter("0" + splitString[1].ToString()) + " cents";
+                        }
+                        
                     }
                     // send the cents string to be converted
                     else
                     {
+                        // check the length of the decimals string
+                        if(splitString[0].Length == 1)
+                        {
+                            // if the length = 1 then add two 0's so that it works in the converter
+                            cents = masterConverter("0" + "0" + splitString[1].ToString()) + " cents";
+                        }
                         
-                        cents = masterConverter(splitString[1]) + " cents";
+                        else if (splitString[0].Length==2)
+                        {
+                            // if the length = 2 then only add one 0
+                            cents = masterConverter("0" + splitString[1].ToString()) + " cents";
+                        }
+                        
                     }
                     
 
@@ -55,8 +87,6 @@ namespace ChequeWriter
                     else
                     {
                         integers = converterAgain(splitString[0])+ " dollars";
-                        Console.WriteLine(integers);
-                        Console.WriteLine(cents);
                         return integers + " and " + cents;
                     }
                     return integers + " and " + cents;
@@ -67,7 +97,7 @@ namespace ChequeWriter
                 else 
                 {
                     // send the integer string to be converted
-                    string integers = converterAgain(num) +"dollars";
+                    string integers = converterAgain(num) +" dollars";
                     return integers;
 
                 }
@@ -87,18 +117,13 @@ namespace ChequeWriter
             // if there is only one number in the string then convert to a word
             if(num.Length == 1)
             {
-                return convertionForHundredsAndOnes(num);
+                return masterConverter("0" + "0" + num);
             }
             // if there are only 2 numbers in the string then convert to a word
             else if(num.Length == 2)
             {
-                 // if the number is in the teens then check them differently
-                if(num[0] == 1)
-                {
-                    return checkTheTeens(num);
-                }
-                else 
-                {
+                
+                
                     // add a third character to the string to pass to the masterconverter
                     num = num.Insert(0,"0");
                     return masterConverter(num);
@@ -108,7 +133,7 @@ namespace ChequeWriter
                     //create a string to store the second return
                     //string ones = convertionForHundredsAndOnes(num[1].ToString());
                     //return tenths +" "+ ones;
-                }
+                
             }
             // when you have more than 3 numbers in the input
             else
@@ -130,12 +155,14 @@ namespace ChequeWriter
                         // reverse the string
                         reversed = reverseString(holdingString);
                         
-
-                        
-                        // create a string to store the tenth return
-                        string tenths = convertionForTens(reversed[0].ToString());
-                        //create a string to store the second return
-                        string ones = convertionForHundredsAndOnes(reversed[1].ToString());
+                        // add a 0 to make 3 characters in the string
+                        reversed = reversed.Insert(0, "0");
+                        // send the response to the master converter and return it
+                        response = response.Insert(0, masterConverter(reversed));
+                        // // create a string to store the tenth return
+                        // string tenths = convertionForTens(reversed[0].ToString());
+                        // //create a string to store the second return
+                        // string ones = convertionForHundredsAndOnes(reversed[1].ToString());
 
                         // reset the strings and return the answer
                         holdingString = String.Empty;
@@ -144,22 +171,27 @@ namespace ChequeWriter
                         
                      
                         // add the answer to the beginning
-                        response =  response.Insert(0, tenths +" "+ ones + " ");
+                        // response =  response.Insert(0, tenths +" "+ ones + " ");
                         
                     }
                     else if(i==0 && holdingString.Length == 1)
                     {
+                        // add two 0's to make 3 characters in the string
+                        reversed = reversed.Insert(0, "0" + "0");
+                        // send the response to the master converter and return it
+                        response = response.Insert(0, masterConverter(reversed));
+                        
                         // reverse the string
                         // reversed = reverseString(holdingString);
                         //create a string to store the second return
-                        string ones = convertionForHundredsAndOnes(holdingString[0].ToString());
+                        // string ones = convertionForHundredsAndOnes(holdingString[0].ToString());
 
                         // reset the strings and return the answer
                         holdingString = String.Empty;
                         reversed = String.Empty;
                         
                      
-                        response =  response.Insert(0, ones + " ");
+                        // response =  response.Insert(0, ones + " ");
                     }
                         
                     // once the string has a length of 3 calculate the string for those 3
@@ -167,15 +199,19 @@ namespace ChequeWriter
                     {
                         // reverse the string
                         reversed = reverseString(holdingString);
-                        
-                        // create a string to store the hundredth return
-                        string hundredth = convertionForHundredsAndOnes(reversed[0].ToString());
-                        // create a string to store the tenth return
-                        string tenths = convertionForTens(reversed[1].ToString());
-                        //create a string to store the second return
-                        string ones = convertionForHundredsAndOnes(reversed[2].ToString());
+                        response = response.Insert(0, masterConverter(reversed));
 
-                        response = response.Insert(0, hundredth + " hundred and " + tenths +" "+ ones + " ");
+                       
+
+                        
+                        // // create a string to store the hundredth return
+                        // string hundredth = convertionForHundredsAndOnes(reversed[0].ToString());
+                        // // create a string to store the tenth return
+                        // string tenths = convertionForTens(reversed[1].ToString());
+                        // //create a string to store the second return
+                        // string ones = convertionForHundredsAndOnes(reversed[2].ToString());
+
+                        // response = response.Insert(0, hundredth + " hundred and " + tenths +" "+ ones + " ");
                         
                         
                         // reset the strings and return the answer
@@ -192,7 +228,7 @@ namespace ChequeWriter
                     if(counter == 2 && holdingString.Length == 0 && i!=0)
                     {
                         // append million
-                        response = response.Insert(0, "million, ");
+                        response = response.Insert(0, " million, ");
                         
                     }
                     // check if the counter is 2 holdingString has cleared and if i still does not equal 0
@@ -200,7 +236,7 @@ namespace ChequeWriter
                     if (counter == 1 && holdingString.Length == 0 && i!= 0)
                     {
                         // append thousand
-                        response = response.Insert(0,  "thousand, ");
+                        response = response.Insert(0,  " thousand, ");
                     }
                     
                    
@@ -514,7 +550,7 @@ namespace ChequeWriter
             else 
             {
                 // create place holder again
-                string placeHolder =  convertionForHundredsAndOnes(n[0].ToString());
+                string placeHolder =  convertionForHundredsAndOnes(n[0].ToString()) + " hundred and ";
                   //if it is check if the second is 0
                 if(n[1].ToString()=="0")
                 {
@@ -531,10 +567,11 @@ namespace ChequeWriter
                 else 
                 {
                     // create variable to hold the value while both run
-                    string placeHolder =  convertionForTens(n[1].ToString());
+                    placeHolder +=  convertionForTens(n[1].ToString()) + " ";
                     placeHolder += convertionForHundredsAndOnes(n[2].ToString());
-                    return placeHolder;
+                    
                 }
+                return placeHolder;
             }
         }
 
