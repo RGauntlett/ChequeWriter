@@ -41,7 +41,7 @@ namespace ChequeWriter
                     else
                     {
                         
-                        cents = converterAgain(splitString[1]) + " cents";
+                        cents = masterConverter(splitString[1]) + " cents";
                     }
                     
 
@@ -99,11 +99,15 @@ namespace ChequeWriter
                 }
                 else 
                 {
+                    // add a third character to the string to pass to the masterconverter
+                    num = num.Insert(0,"0");
+                    return masterConverter(num);
+
                     // create a string to store the tenth return
-                    string tenths = convertionForTens(num[0].ToString());
+                    //string tenths = convertionForTens(num[0].ToString());
                     //create a string to store the second return
-                    string ones = convertionForHundredsAndOnes(num[1].ToString());
-                    return tenths +" "+ ones;
+                    //string ones = convertionForHundredsAndOnes(num[1].ToString());
+                    //return tenths +" "+ ones;
                 }
             }
             // when you have more than 3 numbers in the input
@@ -125,6 +129,9 @@ namespace ChequeWriter
                     {
                         // reverse the string
                         reversed = reverseString(holdingString);
+                        
+
+                        
                         // create a string to store the tenth return
                         string tenths = convertionForTens(reversed[0].ToString());
                         //create a string to store the second return
@@ -475,6 +482,59 @@ namespace ChequeWriter
             else 
             {
                 return " ";
+            }
+        }
+
+        static string masterConverter(string n)
+        {
+            //check if the first digit of the 3 is 0
+            if (n[0].ToString()=="0")
+            {
+                //if it is check if the second is 0
+                if(n[1].ToString()=="0")
+                {
+                    // if it is then print out the conversion
+                    return convertionForHundredsAndOnes(n[2].ToString());
+                }
+                //check if it is a teen
+                else if(n[1].ToString()=="1")
+                {
+                    // if it is use the teen converter
+                    return checkTheTeens(n[1].ToString()+n[2].ToString() + " ");
+                }
+                // otherwise use the tens and ones converter
+                else 
+                {
+                    // create variable to hold the value while both run
+                    string placeHolder =  convertionForTens(n[1].ToString());
+                    placeHolder += convertionForHundredsAndOnes(n[2].ToString());
+                    return placeHolder;
+                }
+            }
+            else 
+            {
+                // create place holder again
+                string placeHolder =  convertionForHundredsAndOnes(n[0].ToString());
+                  //if it is check if the second is 0
+                if(n[1].ToString()=="0")
+                {
+                    // if it is then print out the conversion
+                    placeHolder += convertionForHundredsAndOnes(n[2].ToString());
+                }
+                //check if it is a teen
+                else if(n[1].ToString()=="1")
+                {
+                    // if it is use the teen converter
+                    placeHolder += checkTheTeens(n[1].ToString()+n[2].ToString() + " ");
+                }
+                // otherwise use the tens and ones converter
+                else 
+                {
+                    // create variable to hold the value while both run
+                    string placeHolder =  convertionForTens(n[1].ToString());
+                    placeHolder += convertionForHundredsAndOnes(n[2].ToString());
+                    return placeHolder;
+                }
             }
         }
 
