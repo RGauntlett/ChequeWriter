@@ -1,0 +1,15 @@
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.csproj.AssemblyReference.cache
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.AssemblyInfoInputs.cache
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.AssemblyInfo.cs
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.csproj.CoreCompileInputs.cache
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ChequeWriter.deps.json
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ChequeWriter.runtimeconfig.json
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ChequeWriter.runtimeconfig.dev.json
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ChequeWriter.dll
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ref/ChequeWriter.dll
+/Users/Richard/Desktop/ChequeWriter/bin/Debug/net5.0/ChequeWriter.pdb
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.dll
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ref/ChequeWriter.dll
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.pdb
+/Users/Richard/Desktop/ChequeWriter/obj/Debug/net5.0/ChequeWriter.genruntimeconfig.cache

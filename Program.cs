@@ -4,9 +4,21 @@ namespace ChequeWriter
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            // check if there are decimals
+            Console.Write("please enter a number..");
+            string number = Console.ReadLine();
+            Console.WriteLine(Convert(number));
         }
+
+        static string Convert(string num)
+        {
+            return num;
+        }
+
+
+
+
     }
 }
