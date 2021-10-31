@@ -9,7 +9,26 @@ namespace ChequeWriter
             // check if there are decimals
             Console.Write("please enter a number..");
             string number = Console.ReadLine();
-            Console.WriteLine(Convert(number));
+            try
+            {
+                double errorCheck = Double.Parse(number);
+            
+                // Make sure that the user enters a valid number
+                if (errorCheck <0 || errorCheck >= 1000000000)
+                {
+                    Console.WriteLine("You have entered an invalid amount, please try again");
+                }
+                else
+                {
+                    Console.WriteLine(Convert(number));
+                }
+            } 
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception Caught:", e);
+                Console.WriteLine("Please Try Again:");
+            }
+            
         }
 
         static string Convert(string num)
@@ -90,10 +109,18 @@ namespace ChequeWriter
         // if there is no decimal then just send the integers to be converted
         else
         {
- 
+            // check if only 0 has been entered
+            if(double.Parse(num) == 0)
+            {
+                return "zero dollars";
+            }
+            else
+            {
             // send the integer string to be converted
             integers = converterToThree(num) +" dollars";
             return integers;
+            }
+            
         }
     }
 
