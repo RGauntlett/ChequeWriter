@@ -14,15 +14,7 @@ namespace ChequeWriter
 
         static string Convert(string num)
         {
-            // check that the user has entered a valid number
-            //int check = Int32.Parse(num);
-            //if (check < 0 || check > 999999999.99)
-            //{
-                //return "You have entered an invalid amount. Please try again";
-            //}
-            //else
-            //{
-
+          
                 // check if there are decimal points
                 int index = num.IndexOf(".");
                 // if there is a decimal then split the string at that point
@@ -30,15 +22,40 @@ namespace ChequeWriter
                 {
 
                     var splitString = num.Split(".");
+                    // create empty strings to hold cents and dollars
+                    string cents = String.Empty;
+                    string integers = String.Empty;
+                    {
+                        
+                    }
 
                     // send the cents string to be converted
-                    string cents = converter(splitString[1]) + " cents";
+                    //check if there is 1 cent
+                    if (Int16.Parse(splitString[1]) == 1)
+                    {
+                        cents =  "one cent";
+                    }
+                    else
+                    {
+                        cents = converter(splitString[1]) + " cents";
+                    }
+                    
 
                     // send the integer string to be converted
-                    string integers = converter(splitString[0])+ " dollars";
-                    Console.WriteLine(integers);
-                    Console.WriteLine(cents);
+                    // check if it's only 1 dollar
+                    if (Int16.Parse(splitString[0]) == 1)
+                    {
+                        integers =  "one dollar";
+                    }
+                    else
+                    {
+                        integers = converter(splitString[0])+ " dollars";
+                        Console.WriteLine(integers);
+                        Console.WriteLine(cents);
+                        return integers + " and " + cents;
+                    }
                     return integers + " and " + cents;
+                    
                 }
                 // if there is no decimal then just send the integers to be converted
                 else 
@@ -48,10 +65,6 @@ namespace ChequeWriter
                     return integers;
 
                 }
-                
-
-            //}
-            
 
 
         }
@@ -59,10 +72,11 @@ namespace ChequeWriter
         // create a function to convert each string of 3 and cents to their word form
         static string converter(string strToConvert)
         {
-            Console.WriteLine(strToConvert);
+            
             // check the length of the string to be converted and then start the conversion
             if (strToConvert.Length == 1)
             {
+                
                 return convertionForHundredsAndOnes(strToConvert);
 
             } else if(strToConvert.Length == 2)
