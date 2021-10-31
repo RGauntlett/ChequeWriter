@@ -82,6 +82,8 @@ namespace ChequeWriter
             string holdingString = String.Empty;
             // create a string to store the response
             string response = String.Empty;
+            // create a counter for how many times the holding string has emptied
+            int counter = 0;
             // if there is only one number in the string then convert to a word
             if(num.Length == 1)
             {
@@ -107,23 +109,18 @@ namespace ChequeWriter
             // when you have more than 3 numbers in the input
             else
             {
-
+                // create a string to hold the reversed numbers so they print in the correct order
+                string reversed = String.Empty;
                 // loop over the array and add each number to a string
                 for (int i =num.Length-1, j = 0; i>= 0; i--, j++)
                 {
+                  
                     // create a string to hold the numbers
                     holdingString += num[i];
-                    // create a string to hold the reversed numbers so they print in the correct order
-                    string reversed = String.Empty;
-                    // get the millions, thousands to print
-                    if(num.Length>=4 && i == 3)
-                    {
-                        response += "thousand and ";
-                    }
-                    else if (num.Length>=7 && i==6)
-                    {
-                        response += "million and ";
-                    }
+                    
+                    
+                   
+                   
                     if(i==0 && holdingString.Length == 2)
                     {
                         // reverse the string
@@ -136,6 +133,9 @@ namespace ChequeWriter
                         // reset the strings and return the answer
                         holdingString = String.Empty;
                         reversed = String.Empty;
+                        
+                        
+                     
                         // add the answer to the beginning
                         response =  response.Insert(0, tenths +" "+ ones + " ");
                         
@@ -150,6 +150,8 @@ namespace ChequeWriter
                         // reset the strings and return the answer
                         holdingString = String.Empty;
                         reversed = String.Empty;
+                        
+                     
                         response =  response.Insert(0, ones + " ");
                     }
                         
@@ -158,6 +160,7 @@ namespace ChequeWriter
                     {
                         // reverse the string
                         reversed = reverseString(holdingString);
+                        
                         // create a string to store the hundredth return
                         string hundredth = convertionForHundredsAndOnes(reversed[0].ToString());
                         // create a string to store the tenth return
@@ -165,13 +168,31 @@ namespace ChequeWriter
                         //create a string to store the second return
                         string ones = convertionForHundredsAndOnes(reversed[2].ToString());
 
+                        response = response.Insert(0, hundredth + " hundred and " + tenths +" "+ ones + " ");
+                        
+                        
                         // reset the strings and return the answer
                         holdingString = String.Empty;
+                        counter += 1;
                         reversed = String.Empty;
-                        response += hundredth + " hundred and " + tenths +" "+ ones + " ";
+                        
+                        
 
                          
                     }  
+                    // get the millions, thousands to print
+                    // check if holdingString has cleared and if i is 
+                    if(counter == 2 && holdingString.Length == 0 && i!=0)
+                    {
+                        response = response.Insert(0, "million and ");
+                        
+                    }
+                    if (counter == 1 && holdingString.Length == 0 && i!= 0)
+                    {
+                        response = response.Insert(0,  "thousand and ");
+                    }
+                    
+                   
 
                 }
                 
