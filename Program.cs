@@ -15,6 +15,8 @@ namespace ChequeWriter
         static string Convert(string num)
         {
           
+
+
                 // check if there are decimal points
                 int index = num.IndexOf(".");
                 // if there is a decimal then split the string at that point
@@ -29,27 +31,30 @@ namespace ChequeWriter
                         
                     }
 
-                    // send the cents string to be converted
+                    
                     //check if there is 1 cent
-                    if (Int16.Parse(splitString[1]) == 1)
+                    if (Int32.Parse(splitString[1]) == 1)
                     {
                         cents =  "one cent";
                     }
+                    // send the cents string to be converted
                     else
                     {
-                        cents = converter(splitString[1]) + " cents";
+                        
+                        cents = converterAgain(splitString[1]) + " cents";
                     }
                     
 
-                    // send the integer string to be converted
+                    
                     // check if it's only 1 dollar
-                    if (Int16.Parse(splitString[0]) == 1)
+                    if (Int32.Parse(splitString[0]) == 1)
                     {
                         integers =  "one dollar";
                     }
+                    // send the integer string to be converted
                     else
                     {
-                        integers = converter(splitString[0])+ " dollars";
+                        integers = converterAgain(splitString[0])+ "dollars";
                         Console.WriteLine(integers);
                         Console.WriteLine(cents);
                         return integers + " and " + cents;
@@ -57,16 +62,130 @@ namespace ChequeWriter
                     return integers + " and " + cents;
                     
                 }
+                
                 // if there is no decimal then just send the integers to be converted
                 else 
                 {
                     // send the integer string to be converted
-                    string integers = converter(num) +" dollars";
+                    string integers = converterAgain(num) +"dollars";
                     return integers;
 
                 }
 
 
+        }
+
+        // trying the function by dividing by 3 
+        static string converterAgain(string num)
+        {
+            // create empty string to hold 3 numbers
+            string holdingString = String.Empty;
+            // create a string to store the response
+            string response = String.Empty;
+            // if there is only one number in the string then convert to a word
+            if(num.Length == 1)
+            {
+                return convertionForHundredsAndOnes(num);
+            }
+            // if there are only 2 numbers in the string then convert to a word
+            else if(num.Length == 2)
+            {
+                 // if the number is in the teens then check them differently
+                if(num[0] == 1)
+                {
+                    return checkTheTeens(num);
+                }
+                else 
+                {
+                    // create a string to store the tenth return
+                    string tenths = convertionForTens(num[0].ToString());
+                    //create a string to store the second return
+                    string ones = convertionForHundredsAndOnes(num[1].ToString());
+                    return tenths +" "+ ones;
+                }
+            }
+            // when you have more than 3 numbers in the input
+            else
+            {
+
+                // loop over the array and add each number to a string
+                for (int i =num.Length-1, j = 0; i>= 0; i--, j++)
+                {
+                    // create a string to hold the numbers
+                    holdingString += num[i];
+                    // create a string to hold the reversed numbers so they print in the correct order
+                    string reversed = String.Empty;
+                    // get the millions, thousands to print
+                    if(num.Length>=4 && i == 3)
+                    {
+                        response += "thousand and ";
+                    }
+                    else if (num.Length>=7 && i==6)
+                    {
+                        response += "million and ";
+                    }
+                    if(i==0 && holdingString.Length == 2)
+                    {
+                        // reverse the string
+                        reversed = reverseString(holdingString);
+                        // create a string to store the tenth return
+                        string tenths = convertionForTens(reversed[0].ToString());
+                        //create a string to store the second return
+                        string ones = convertionForHundredsAndOnes(reversed[1].ToString());
+
+                        // reset the strings and return the answer
+                        holdingString = String.Empty;
+                        reversed = String.Empty;
+                        // add the answer to the beginning
+                        response =  response.Insert(0, tenths +" "+ ones + " ");
+                        
+                    }
+                    else if(i==0 && holdingString.Length == 1)
+                    {
+                        // reverse the string
+                        // reversed = reverseString(holdingString);
+                        //create a string to store the second return
+                        string ones = convertionForHundredsAndOnes(holdingString[0].ToString());
+
+                        // reset the strings and return the answer
+                        holdingString = String.Empty;
+                        reversed = String.Empty;
+                        response =  response.Insert(0, ones + " ");
+                    }
+                        
+                    // once the string has a length of 3 calculate the string for those 3
+                    if (holdingString.Length == 3)
+                    {
+                        // reverse the string
+                        reversed = reverseString(holdingString);
+                        // create a string to store the hundredth return
+                        string hundredth = convertionForHundredsAndOnes(reversed[0].ToString());
+                        // create a string to store the tenth return
+                        string tenths = convertionForTens(reversed[1].ToString());
+                        //create a string to store the second return
+                        string ones = convertionForHundredsAndOnes(reversed[2].ToString());
+
+                        // reset the strings and return the answer
+                        holdingString = String.Empty;
+                        reversed = String.Empty;
+                        response += hundredth + " hundred and " + tenths +" "+ ones + " ";
+
+                         
+                    }  
+
+                }
+                
+            }
+            return response;
+            
+        }
+
+        //write a function to reverse my strings
+        static string reverseString(string str)
+        {
+            char[] charArray = str.ToCharArray();
+            Array.Reverse( charArray );
+            return new string( charArray );
         }
 
         // create a function to convert each string of 3 and cents to their word form
@@ -99,17 +218,99 @@ namespace ChequeWriter
             {
                 // create a string to store the hundredth return
                 string hundredth = convertionForHundredsAndOnes(strToConvert[0].ToString());
-                // check if there is a 1 in the tenths spot
-                // if(strToConvert[1] == "1")
-                // {
-                //     int teens = 
-                // }
                 // create a string to store the tenth return
                 string tenths = convertionForTens(strToConvert[1].ToString());
                 //create a string to store the second return
                 string ones = convertionForHundredsAndOnes(strToConvert[2].ToString());
 
-                return hundredth + " hundred " + tenths +" "+ ones;
+                return hundredth + " hundred  and " + tenths +" "+ ones;
+            }
+
+            else if (strToConvert.Length == 4)
+            {
+                string thousandth = convertionForHundredsAndOnes(strToConvert[0].ToString());
+                // create a string to store the hundredth return
+                string hundredth = convertionForHundredsAndOnes(strToConvert[1].ToString());
+                 // create a string to store the tenth return
+                string tenths = convertionForTens(strToConvert[2].ToString());
+                //create a string to store the second return
+                string ones = convertionForHundredsAndOnes(strToConvert[3].ToString());
+
+
+                return thousandth + " thousand " + hundredth + " hundred and " + tenths +" "+ ones;
+            }
+            else if(strToConvert.Length == 5)
+            {
+                //create string to hold response
+                string response = String.Empty;
+                // run a for loop to simplify the code
+                for (int i = 0; i<= strToConvert.Length-1; i++)
+                {
+                    //check if the number is a 0
+                    if(strToConvert[i].ToString() != "0")
+                    {
+                        //if i is divisible by 2 then use the tenths space column 
+                        if(i==0 || i==3)
+                        {
+                            response += convertionForTens(strToConvert[i].ToString())+ " ";
+                        }
+                        // otherwise use the hundreds and ones
+                        else 
+                        {
+                            response += convertionForHundredsAndOnes(strToConvert[i].ToString()) + " ";
+                        }
+                        // add thousand to the response at the right time
+                      
+                        if (i==2)
+                        {
+                        response+= "hundred and ";
+                        }
+                        else if(i==1)
+                        {
+                            response += "thousand ";
+                        } 
+                    }
+                    else if(i==1)
+                        {
+                            response += "thousand ";
+                        } 
+                    else if(i == 2)
+                    {
+                        response+= "and ";
+                    }
+                    
+                }
+                return response;
+            }
+             else if(strToConvert.Length == 6)
+            {
+                //create string to hold response
+                string response = String.Empty;
+                // run a for loop to simplify the code
+                for (int i = 0; i<= strToConvert.Length-1; i++)
+                {
+                    //if i is divisible by 2 then use the tenths space column 
+                    if(i==1 || i==4)
+                    {
+                        response += convertionForTens(strToConvert[i].ToString())+ " ";
+                    }
+                    // otherwise use the hundreds and ones
+                    else 
+                    {
+                        response += convertionForHundredsAndOnes(strToConvert[i].ToString()) + " ";
+                    }
+                    // add thousand to the response at the right time
+                    if(i==2)
+                    {
+                        response += "thousand ";
+                    } 
+                    else if (i==0|| i==3)
+                    {
+                        response+= "hundred and ";
+                    }
+                    
+                }
+                return response;
             }
             else
             {
