@@ -47,7 +47,7 @@ namespace ChequeWriter
             {
                 // if there is no decimal point then send the integers to be converted
                 strIntegers += splitUpTheNumbers(numbers); 
-                return strIntegers + prepareTheAnswerDollars(strIntegers) + " and zero cents";
+                return strIntegers + prepareTheAnswerDollars(numbers) + " zero cents";
             }
             // if there is a decimal point
            else
