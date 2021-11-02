@@ -116,13 +116,13 @@ namespace ChequeWriter
                 }
                 if(counter == 1 && i!=0)
                 {
-                    response = response.Insert(0, "thousand "); 
+                    response = response.Insert(0, "thousand and "); 
                     counter += 1;
                 }
                 // if counter gets to 2 and i !=0 then we are in the millions
                 if(counter == 3 && i != 0)
                 {
-                    response = response.Insert(0,"million ");
+                    response = response.Insert(0,"million and ");
                     counter += 1;
                 }  
             }
