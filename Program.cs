@@ -62,7 +62,7 @@ namespace ChequeWriter
 
         static string prepareTheAnswerDollars(string dollars)
         {
-            if(Int16.Parse(dollars)==1)
+            if(Int32.Parse(dollars)==1)
             {
                 return "dollar and";
             }
@@ -73,9 +73,9 @@ namespace ChequeWriter
         }
         static string prepareTheAnswerCents(string cents)
         {
-            if(Int16.Parse(cents)==1)
+            if(Int32.Parse(cents)==1)
             {
-                return "cents";
+                return "cent";
             }
             else
             {
