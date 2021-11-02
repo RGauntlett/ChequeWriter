@@ -20,7 +20,8 @@ namespace ChequeWriter
                 }
                 else
                 {
-                    Console.WriteLine(divideAndConquer(number));
+                    // send the parsed version of number to get rid of any 0's entered before the actual number
+                    Console.WriteLine(divideAndConquer(Double.Parse(number).ToString()));
                 }
             } 
             catch (Exception e)
@@ -170,8 +171,7 @@ namespace ChequeWriter
             string response = String.Empty;
             // Create an array of integers by parsing the individual characters of num and reverse the string to make sure it's the correct order
             int[] intNum = new int[3]{Int16.Parse(num[2].ToString()), Int16.Parse(num[1].ToString()), Int16.Parse(num[0].ToString())};
-            
-            
+                
             // if the first character of num is not 0 then 
             if(intNum[0] != 0)
             {
